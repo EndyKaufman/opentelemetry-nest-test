@@ -4,6 +4,8 @@ import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { asl } from './asl';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './http-exception-filter';
 
 @Module({
   imports: [
@@ -39,6 +41,10 @@ import { asl } from './asl';
   ],
   controllers: [AppController],
   providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
     {
       provide: AsyncLocalStorage,
       useValue: asl,

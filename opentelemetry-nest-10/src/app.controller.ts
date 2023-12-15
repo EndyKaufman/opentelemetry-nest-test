@@ -1,8 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { BadRequestException, Controller, Get } from '@nestjs/common';
 import { ApiHeaders } from '@nestjs/swagger';
-import { AppService } from './app.service';
 import { AsyncLocalStorage } from 'async_hooks';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
@@ -24,6 +24,6 @@ export class AppController {
   @Get('error')
   getError(): string {
     this.logger.info('getError' + this.als.getStore()['userId']);
-    throw new Error();
+    throw new BadRequestException();
   }
 }

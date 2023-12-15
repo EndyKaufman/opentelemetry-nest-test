@@ -7,3 +7,5 @@ P2=$!
 wait $P1 $P2
 
 # open http://localhost:16686/
+# open http://localhost:4409/api
+# open http://localhost:4410/api

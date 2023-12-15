@@ -1,3 +1,4 @@
+// https://www.tomray.dev/nestjs-open-telemetry
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { Resource } from '@opentelemetry/resources';
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
@@ -31,7 +32,9 @@ const sdk = new NodeSDK({
   instrumentations: [
     getNodeAutoInstrumentations({
       '@opentelemetry/instrumentation-fs': { enabled: false },
+      // not work
       '@opentelemetry/instrumentation-nestjs-core': { enabled: true },
+      // not work
       '@opentelemetry/instrumentation-pino': {
         enabled: true,
         logHook: (_span, record) => {
