@@ -9,6 +9,7 @@ import {
 
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { NodeSDK } from '@opentelemetry/sdk-node';
+import { asl } from './asl';
 
 const exporter = new OTLPTraceExporter({
   url: 'http://localhost:4318/v1/traces',
@@ -29,9 +30,14 @@ const sdk = new NodeSDK({
   traceExporter: exporter,
   instrumentations: [
     getNodeAutoInstrumentations({
-      '@opentelemetry/instrumentation-express': { enabled: false },
       '@opentelemetry/instrumentation-fs': { enabled: false },
       '@opentelemetry/instrumentation-nestjs-core': { enabled: true },
+      '@opentelemetry/instrumentation-pino': {
+        enabled: true,
+        logHook: (_span, record) => {
+          record['OTEL_userId'] = asl.getStore()['userId'];
+        },
+      },
     }),
   ],
 });

@@ -32,6 +32,9 @@
     "@opentelemetry/sdk-node": "^0.46.0",
     "@opentelemetry/semantic-conventions": "^1.19.0",
     "@opentelemetry/tracing": "^0.24.0",
+    "nestjs-pino": "^3.5.0",
+    "pino-http": "^8.5.1",
+    "pino-pretty": "^10.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
