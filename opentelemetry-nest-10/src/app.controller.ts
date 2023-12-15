@@ -3,6 +3,7 @@ import { ApiHeaders } from '@nestjs/swagger';
 import { AsyncLocalStorage } from 'async_hooks';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { AppService } from './app.service';
+import { Observable, of, throwError } from 'rxjs';
 
 @Controller()
 export class AppController {
@@ -15,15 +16,15 @@ export class AppController {
 
   @ApiHeaders([{ name: 'x-user-id' }, { name: 'X-B3-TraceId' }])
   @Get()
-  getHello(): string {
+  getHello(): Observable<string> {
     this.logger.info('getHello' + this.als.getStore()['userId']);
-    return this.appService.getHello();
+    return of(this.appService.getHello());
   }
 
   @ApiHeaders([{ name: 'x-user-id' }, { name: 'X-B3-TraceId' }])
   @Get('error')
-  getError(): string {
+  getError(): Observable<string> {
     this.logger.info('getError' + this.als.getStore()['userId']);
-    throw new BadRequestException();
+    return throwError(() => new BadRequestException());
   }
 }
