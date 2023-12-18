@@ -3,7 +3,7 @@ import { AsyncLocalStorage } from 'async_hooks';
 import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { asl } from './asl';
+import { als } from './als';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './http-exception-filter';
 
@@ -21,8 +21,8 @@ import { HttpExceptionFilter } from './http-exception-filter';
               const record = inputArgs.shift() || {};
               const arg2 = inputArgs.shift();
 
-              if (asl.getStore()) {
-                record['userId'] = asl.getStore()['userId'];
+              if (als.getStore()) {
+                record['userId'] = als.getStore()['userId'];
               }
 
               return method.apply(this, [record, arg2, ...inputArgs]);
@@ -47,7 +47,7 @@ import { HttpExceptionFilter } from './http-exception-filter';
     },
     {
       provide: AsyncLocalStorage,
-      useValue: asl,
+      useValue: als,
     },
     AppService,
   ],

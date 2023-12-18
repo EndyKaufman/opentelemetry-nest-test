@@ -11,7 +11,7 @@ import {
 
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { NodeSDK } from '@opentelemetry/sdk-node';
-import { asl } from './asl';
+import { als } from './als';
 
 const exporter = new OTLPTraceExporter({
   url: 'http://localhost:4318/v1/traces',
@@ -39,7 +39,7 @@ const sdk = new NodeSDK({
       '@opentelemetry/instrumentation-pino': {
         enabled: true,
         logHook: (_span, record) => {
-          record['OTEL_userId'] = asl.getStore()['userId'];
+          record['OTEL_userId'] = als.getStore()?.['userId'];
         },
       },
     }),

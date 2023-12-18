@@ -2,8 +2,8 @@ import { BadRequestException, Controller, Get } from '@nestjs/common';
 import { ApiHeaders } from '@nestjs/swagger';
 import { AsyncLocalStorage } from 'async_hooks';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { Observable, of } from 'rxjs';
 import { AppService } from './app.service';
-import { Observable, of, throwError } from 'rxjs';
 
 @Controller()
 export class AppController {
@@ -17,14 +17,14 @@ export class AppController {
   @ApiHeaders([{ name: 'x-user-id' }, { name: 'X-B3-TraceId' }])
   @Get()
   getHello(): Observable<string> {
-    this.logger.info('getHello' + this.als.getStore()['userId']);
+    this.logger.info('getHello' + this.als.getStore()?.['userId']);
     return of(this.appService.getHello());
   }
 
   @ApiHeaders([{ name: 'x-user-id' }, { name: 'X-B3-TraceId' }])
   @Get('error')
-  getError(): Observable<string> {
-    this.logger.info('getError' + this.als.getStore()['userId']);
-    return throwError(() => new BadRequestException());
+  async getError(): Promise<string> {
+    this.logger.info('getError' + this.als.getStore()?.['userId']);
+    throw new BadRequestException();
   }
 }
