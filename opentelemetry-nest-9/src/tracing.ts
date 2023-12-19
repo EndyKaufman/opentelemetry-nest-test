@@ -38,7 +38,7 @@ const sdk = new NodeSDK({
       '@opentelemetry/instrumentation-pino': {
         enabled: true,
         logHook: (_span, record) => {
-          record['OTEL_userId'] = als.getStore()['userId'];
+          record['OTEL_userId'] = als.getStore()?.['userId'];
         },
       },
     }),

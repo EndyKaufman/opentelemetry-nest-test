@@ -12,7 +12,7 @@ import { als } from './als';
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
-    console.log('userId: ', als.getStore()['userId']);
+    console.log('userId: ', als.getStore()?.['userId']);
     const response = host.switchToHttp().getResponse<FastifyReply>();
 
     const ctx = host.switchToHttp();
