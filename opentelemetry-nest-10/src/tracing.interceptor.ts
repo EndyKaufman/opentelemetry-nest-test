@@ -39,11 +39,8 @@ export class TracingInterceptor implements NestInterceptor {
       userId = req.headers[X_USER_ID] || randomUUID();
     }
     console.log([userId]);
-
     return als.run({ userId }, () => {
-      console.log('getStore1');
-      console.log(als.getStore());
-
+      req['__als'] = als.getStore();
       return next.handle();
     });
   }
