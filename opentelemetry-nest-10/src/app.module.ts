@@ -18,7 +18,7 @@ import { TracingInterceptor } from './tracing.interceptor';
             // eslint-disable-next-line @typescript-eslint/ban-types
             method: Function,
           ): unknown {
-            if (inputArgs.length >= 2) {
+            if (inputArgs.length >= 1) {
               const record = inputArgs.shift() || {};
               const arg2 = inputArgs.shift();
 
